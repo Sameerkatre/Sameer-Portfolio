@@ -783,3 +783,257 @@ export const CERTIFICATIONS: Certification[] = [
     badgeColor: 'border-indigo-500/30 text-indigo-300 bg-indigo-950/20',
   },
 ];
+
+export interface ToolItem {
+  name: string;
+  category:
+    | 'Cloud & Infrastructure'
+    | 'Containers & Orchestration'
+    | 'IaC & Automation'
+    | 'CI/CD & GitOps'
+    | 'AI & LLM Systems'
+    | 'Observability & Monitoring'
+    | 'Security & Networking'
+    | 'Scripting & OS';
+  proficiency: 'Expert' | 'Advanced' | 'Proficient';
+  iconName?: string;
+  description: string;
+  badge?: string;
+}
+
+export const ALL_TOOLS_WORKED_ON: ToolItem[] = [
+  // Cloud & Infrastructure
+  {
+    name: 'Amazon Web Services (AWS)',
+    category: 'Cloud & Infrastructure',
+    proficiency: 'Expert',
+    description: 'Production architecture: EKS, EC2, Lambda, S3, RDS, IAM, VPC, Route 53, CloudWatch, ECR, ALB/NLB, Cognito',
+    badge: 'Core Platform',
+  },
+  {
+    name: 'AWS EKS (Elastic Kubernetes)',
+    category: 'Cloud & Infrastructure',
+    proficiency: 'Expert',
+    description: 'Managed production multi-tenant Kubernetes clusters with managed node groups, ALB Ingress, and HPA autoscaling',
+    badge: 'Production Proven',
+  },
+  {
+    name: 'AWS Lambda (Serverless)',
+    category: 'Cloud & Infrastructure',
+    proficiency: 'Expert',
+    description: 'Event-driven serverless AI inference dispatchers with zero idle baseline cost, S3 and API Gateway triggers',
+    badge: '$0 Idle Cost',
+  },
+  {
+    name: 'AWS S3 & CloudWatch',
+    category: 'Cloud & Infrastructure',
+    proficiency: 'Expert',
+    description: 'Encrypted remote Terraform state storage, synthetic alarms, unified log streaming, and metric alerts',
+  },
+  {
+    name: 'AWS IAM & RBAC Policies',
+    category: 'Cloud & Infrastructure',
+    proficiency: 'Expert',
+    description: 'Least-privilege role boundaries, OIDC federated roles for GitHub Actions & Kubernetes service accounts',
+  },
+  {
+    name: 'AWS VPC & Cloud Networking',
+    category: 'Cloud & Infrastructure',
+    proficiency: 'Advanced',
+    description: 'Multi-AZ private/public subnets, NAT Gateways, Route 53 DNS records, Application/Network Load Balancers',
+  },
+  {
+    name: 'Google Cloud Platform (GCP)',
+    category: 'Cloud & Infrastructure',
+    proficiency: 'Advanced',
+    description: 'Cloud Storage, Compute Engine, GCP Machine Learning APIs, Vertex AI, and Google GenAI SDK integration',
+  },
+
+  // Containers & Orchestration
+  {
+    name: 'Kubernetes (K8s)',
+    category: 'Containers & Orchestration',
+    proficiency: 'Expert',
+    description: 'Production orchestrations, rolling updates, zero-downtime releases, 10+ safe automated rollback drills',
+    badge: '10+ Safe Rollbacks',
+  },
+  {
+    name: 'Docker & Docker Compose',
+    category: 'Containers & Orchestration',
+    proficiency: 'Expert',
+    description: 'Multi-stage production Dockerfiles, image size reduction, layer caching, local dev orchestration',
+  },
+  {
+    name: 'Helm (K8s Package Manager)',
+    category: 'Containers & Orchestration',
+    proficiency: 'Expert',
+    description: 'Authoring modular Helm charts, environment-specific values.yaml, templated microservices deployments',
+  },
+  {
+    name: 'Horizontal Pod Autoscaler (HPA)',
+    category: 'Containers & Orchestration',
+    proficiency: 'Advanced',
+    description: 'CPU/Memory/Custom metrics auto-scaling rules, stabilization windows, and burst traffic mitigation',
+  },
+  {
+    name: 'ALB Ingress Controller',
+    category: 'Containers & Orchestration',
+    proficiency: 'Advanced',
+    description: 'Path-based routing, SSL/TLS certificate termination via ACM, zero-downtime Blue/Green traffic switching',
+  },
+
+  // Infrastructure as Code (IaC)
+  {
+    name: 'Terraform (HashiCorp)',
+    category: 'IaC & Automation',
+    proficiency: 'Expert',
+    description: 'Certified Associate; modular infrastructure, remote S3 backends, DynamoDB locking; slashed spin-up 92%',
+    badge: '-92% Spin-up',
+  },
+  {
+    name: 'HashiCorp HCL',
+    category: 'IaC & Automation',
+    proficiency: 'Expert',
+    description: 'Enterprise reusable Terraform modules for VPC, EKS, RDS, and IAM; 100% audit-compliant configurations',
+  },
+  {
+    name: 'Ansible',
+    category: 'IaC & Automation',
+    proficiency: 'Advanced',
+    description: 'Configuration management, host automation, declarative playbooks, and server baseline hardening',
+  },
+  {
+    name: 'AWS CloudFormation',
+    category: 'IaC & Automation',
+    proficiency: 'Proficient',
+    description: 'JSON/YAML cloud resource templates, nested stacks, and drift detection across AWS services',
+  },
+
+  // CI/CD & GitOps
+  {
+    name: 'Argo CD (GitOps)',
+    category: 'CI/CD & GitOps',
+    proficiency: 'Expert',
+    description: 'Declarative GitOps sync engine, automated rollbacks, self-healing clusters, and canary release tracking',
+    badge: 'Zero Downtime',
+  },
+  {
+    name: 'Jenkins (Pipeline-as-Code)',
+    category: 'CI/CD & GitOps',
+    proficiency: 'Expert',
+    description: 'Groovy Jenkinsfiles, multibranch pipelines, webhook automation, automated artifact staging',
+  },
+  {
+    name: 'GitHub Actions',
+    category: 'CI/CD & GitOps',
+    proficiency: 'Expert',
+    description: 'Reusable CI workflows, automated testing, pre-merge AI code review bots, and container build/push',
+  },
+  {
+    name: 'Bitbucket Pipelines & Bamboo',
+    category: 'CI/CD & GitOps',
+    proficiency: 'Advanced',
+    description: 'Consolidated fragmented Jenkins setups into unified Bitbucket + Bamboo + Argo CD GitOps pipelines',
+  },
+  {
+    name: 'GitLab CI/CD',
+    category: 'CI/CD & GitOps',
+    proficiency: 'Advanced',
+    description: 'GitLab runner setups, .gitlab-ci.yml pipelines, multi-environment review apps and deploy stages',
+  },
+
+  // AI & LLM Systems
+  {
+    name: 'Model Context Protocol (MCP)',
+    category: 'AI & LLM Systems',
+    proficiency: 'Expert',
+    description: 'Engineered production MCP servers bridging AI models with AWS CloudWatch, Lambda telemetry, and Git repos',
+    badge: 'Next-Gen AI',
+  },
+  {
+    name: 'Claude API (Anthropic)',
+    category: 'AI & LLM Systems',
+    proficiency: 'Expert',
+    description: 'Built automated pre-merge code review bots detecting runtime bugs and security flaws prior to merge',
+  },
+  {
+    name: 'OpenAI API & SDK',
+    category: 'AI & LLM Systems',
+    proficiency: 'Advanced',
+    description: 'Embedded LLM workflows, conversational assistants, structured function calling, and token optimization',
+  },
+  {
+    name: 'Google Gemini API & GenAI',
+    category: 'AI & LLM Systems',
+    proficiency: 'Advanced',
+    description: 'GCP Machine Learning APIs, multimodal analysis, prompt engineering, and GenAI SDK integration',
+  },
+
+  // Observability & Monitoring
+  {
+    name: 'Datadog (APM & Synthetics)',
+    category: 'Observability & Monitoring',
+    proficiency: 'Expert',
+    description: 'Custom metric dashboards, APM distributed traces, synthetic monitors; slashed incident detection (MTTD) 60%',
+    badge: '-60% MTTD',
+  },
+  {
+    name: 'Splunk (Log Intelligence)',
+    category: 'Observability & Monitoring',
+    proficiency: 'Advanced',
+    description: 'Forwarder configurations, event parsing, search queries, security audit logging across hotel properties',
+  },
+  {
+    name: 'Prometheus & Grafana',
+    category: 'Observability & Monitoring',
+    proficiency: 'Advanced',
+    description: 'Kubernetes pod metrics, PromQL alerting rules, cluster resource utilization dashboards',
+  },
+
+  // Security & Networking
+  {
+    name: 'HashiCorp Vault',
+    category: 'Security & Networking',
+    proficiency: 'Advanced',
+    description: 'Dynamic secret management, transit secrets encryption, secure credential injection into K8s pods',
+  },
+  {
+    name: 'AWS Secrets Manager',
+    category: 'Security & Networking',
+    proficiency: 'Expert',
+    description: 'Automated database credential rotation, secure microservice environment variables with IAM auth',
+  },
+  {
+    name: 'Trivy & SonarQube',
+    category: 'Security & Networking',
+    proficiency: 'Advanced',
+    description: 'Pre-deployment container image vulnerability scanning and static code quality gate enforcement',
+  },
+
+  // Scripting & OS
+  {
+    name: 'Python (Boto3 & Automation)',
+    category: 'Scripting & OS',
+    proficiency: 'Expert',
+    description: 'Automated AWS infrastructure scripts with Boto3, MCP server implementations, and AI dispatchers',
+  },
+  {
+    name: 'Bash & Shell Scripting',
+    category: 'Scripting & OS',
+    proficiency: 'Expert',
+    description: 'Linux systems automation, deployment hooks, database backup cronjobs, and log triage scripts',
+  },
+  {
+    name: 'Linux (Ubuntu, Debian, RHEL, Alpine)',
+    category: 'Scripting & OS',
+    proficiency: 'Expert',
+    description: 'Systemd service management, kernel network tuning, disk I/O monitoring, and minimal container images',
+  },
+  {
+    name: 'Git & GitOps Workflow',
+    category: 'Scripting & OS',
+    proficiency: 'Expert',
+    description: 'Trunk-based development, semantic versioning, GitOps pull-request verification, and merge guardrails',
+  },
+];
+

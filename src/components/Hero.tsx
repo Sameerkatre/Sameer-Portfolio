@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PERSONAL_INFO, CORE_METRICS } from '../data/portfolioData';
+import { SAMEER_PHOTO_DATA_URL, ACTIVE_PROFILE_IMAGE } from '../assets/photoDataUrl';
+import profilePhotoAsset from '../assets/Profile_Photo_264310ba.jpeg';
+import devopsBanner from '../assets/images/devops_infrastructure_banner_1792135786250.jpg';
 import {
   ArrowRight,
   Terminal,
@@ -11,10 +14,6 @@ import {
   Copy,
   Server,
   Award,
-  Upload,
-  RotateCcw,
-  Camera,
-  Image as ImageIcon,
   ExternalLink,
 } from 'lucide-react';
 
@@ -26,11 +25,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenResume, onOpenTerminal }) => {
   const [activeView, setActiveView] = useState<'photo' | 'topology'>('photo');
-  const [imageFit, setImageFit] = useState<'contain' | 'cover'>('contain');
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [userCustomPhoto, setUserCustomPhoto] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string>('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Dynamic animated headline capabilities
   const rotatingCapabilities = [
@@ -49,59 +44,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onOpenTerminal }) => {
     return () => clearInterval(timer);
   }, [rotatingCapabilities.length]);
 
-  // Load custom photo from localStorage if user previously uploaded it
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('sameer_exact_photo');
-      const savedName = localStorage.getItem('sameer_exact_photo_name');
-      if (saved) {
-        setUserCustomPhoto(saved);
-        if (savedName) setFileName(savedName);
-      }
-    } catch {
-      // ignore
-    }
-  }, []);
-
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(PERSONAL_INFO.email);
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2000);
   };
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        if (result) {
-          setUserCustomPhoto(result);
-          try {
-            localStorage.setItem('sameer_exact_photo', result);
-            localStorage.setItem('sameer_exact_photo_name', file.name);
-          } catch {
-            // storage limit
-          }
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleResetPhoto = () => {
-    setUserCustomPhoto(null);
-    setFileName('');
-    try {
-      localStorage.removeItem('sameer_exact_photo');
-      localStorage.removeItem('sameer_exact_photo_name');
-    } catch {
-      // ignore
-    }
-  };
-
-  const fallbackPhotoUrl = '/src/assets/images/sameer_uncropped_photo_1792138789315.jpg';
 
   return (
     <section className="relative pt-8 pb-16 border-b border-slate-800/80 overflow-hidden bg-slate-950">
@@ -247,20 +194,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onOpenTerminal }) => {
               {/* Header inside visual card */}
               <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3 gap-2 flex-wrap">
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-slate-700" />
-                  <span className="text-xs font-mono text-slate-400 pl-1">
-                    {userCustomPhoto ? (fileName || 'original_photo.jpg') : 'sameer_katre.jpg'}
+                  <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                  <span className="text-xs font-mono text-cyan-300 pl-1 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>sameer_katre.tf</span>
                   </span>
                 </div>
 
-                {/* Controls: View Switcher, Fit & Upload */}
+                {/* Controls: View Switcher */}
                 <div className="flex items-center gap-1.5">
                   <div className="flex items-center bg-slate-950 p-1 rounded-lg border border-slate-800">
                     <button
                       onClick={() => setActiveView('photo')}
-                      className={`px-2 py-0.5 text-xs font-medium rounded-md transition-colors ${
+                      className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
                         activeView === 'photo'
                           ? 'bg-slate-800 text-cyan-300 font-semibold shadow-sm'
                           : 'text-slate-400 hover:text-slate-200'
@@ -270,7 +218,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onOpenTerminal }) => {
                     </button>
                     <button
                       onClick={() => setActiveView('topology')}
-                      className={`px-2 py-0.5 text-xs font-medium rounded-md transition-colors ${
+                      className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
                         activeView === 'topology'
                           ? 'bg-slate-800 text-cyan-300 font-semibold shadow-sm'
                           : 'text-slate-400 hover:text-slate-200'
@@ -279,82 +227,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onOpenTerminal }) => {
                       Topology
                     </button>
                   </div>
-
-                  {activeView === 'photo' && (
-                    <button
-                      onClick={() => setImageFit(imageFit === 'contain' ? 'cover' : 'contain')}
-                      className="px-2 py-1 text-[11px] font-mono text-slate-300 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-md transition-colors"
-                      title={imageFit === 'contain' ? 'Switch to cropped fill' : 'Switch to full uncropped photo'}
-                    >
-                      {imageFit === 'contain' ? 'Uncropped' : 'Fill'}
-                    </button>
-                  )}
-
-                  {/* Upload button to select exact original photo from device */}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-md transition-colors shadow-sm"
-                    title="Select your exact WhatsApp photo from your device"
-                  >
-                    <Upload className="w-3.5 h-3.5" />
-                    <span>Upload Original</span>
-                  </button>
-
-                  {userCustomPhoto && (
-                    <button
-                      onClick={handleResetPhoto}
-                      className="p-1 text-slate-400 hover:text-rose-400 transition-colors"
-                      title="Reset photo"
-                    >
-                      <RotateCcw className="w-3.5 h-3.5" />
-                    </button>
-                  )}
                 </div>
               </div>
 
               {/* Card Body with PROPER VERTICAL ALIGNMENT & ZERO CUTOFF */}
               <div className="relative h-[480px] sm:h-[530px] rounded-xl overflow-hidden bg-slate-950 border border-slate-800/80 flex items-center justify-center">
                 {activeView === 'photo' ? (
-                  <div className="relative w-full h-full flex flex-col items-center justify-center bg-slate-950 group">
+                  <div className="relative w-full h-full flex flex-col items-center justify-center bg-slate-950">
+                    {/* User attached photo in src & hardcoded Data URL for Hostinger reliability */}
                     <img
-                      src={userCustomPhoto || fallbackPhotoUrl}
+                      src={ACTIVE_PROFILE_IMAGE || SAMEER_PHOTO_DATA_URL || profilePhotoAsset}
                       alt="Sameer Katre - DevOps Engineer based in Pune"
-                      referrerPolicy="no-referrer"
-                      className={`w-full h-full ${
-                        imageFit === 'contain'
-                          ? 'object-contain object-top'
-                          : 'object-cover object-[center_10%]'
-                      } transition-all duration-300`}
+                      className="w-full h-full object-contain object-top transition-all duration-300 select-none"
                     />
 
-                    {/* If user hasn't selected their local original file yet, show a clean helper banner */}
-                    {!userCustomPhoto && (
-                      <div
-                        onClick={() => fileInputRef.current?.click()}
-                        className="absolute top-3 inset-x-3 bg-slate-900/90 hover:bg-slate-800/95 border border-cyan-500/40 rounded-lg p-2.5 flex items-center justify-between cursor-pointer shadow-lg backdrop-blur-sm transition-all"
-                      >
-                        <div className="flex items-center gap-2">
-                          <Camera className="w-4 h-4 text-cyan-400" />
-                          <div className="text-[11px] text-slate-200">
-                            <span className="font-semibold text-white">Click here to attach your exact photo</span>
-                            <span className="hidden sm:inline text-slate-400"> (100% original, zero editing)</span>
-                          </div>
-                        </div>
-                        <span className="text-[11px] font-semibold text-cyan-400 font-mono flex items-center gap-1">
-                          <span>Browse</span>
-                          <Upload className="w-3 h-3" />
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Bottom gradient scrim with name & status */}
+                    {/* Bottom gradient scrim with name & status - clean with NO upload tags */}
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/85 to-transparent pt-12 pb-3 px-4 pointer-events-none">
                       <div className="flex items-baseline justify-between">
                         <div>
@@ -365,24 +252,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onOpenTerminal }) => {
                             DevOps Engineer · Pune, India
                           </div>
                         </div>
-                        {userCustomPhoto ? (
-                          <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-2 py-0.5 rounded">
-                            Original Photo Loaded
-                          </span>
-                        ) : (
-                          <span className="text-[10px] font-mono text-slate-400">
-                            Uncropped Alignment
-                          </span>
-                        )}
+                        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-2 py-0.5 rounded">
+                          Open to Roles
+                        </span>
                       </div>
                     </div>
                   </div>
                 ) : (
                   <div className="relative w-full h-full">
                     <img
-                      src="/src/assets/images/devops_infrastructure_banner_1792135786250.jpg"
+                      src={devopsBanner}
                       alt="DevOps Architecture Topology"
-                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent p-3 text-xs text-slate-300">

@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PERSONAL_INFO } from '../data/portfolioData';
-import { Menu, X, FileText, Send, Award, Linkedin } from 'lucide-react';
+import { Menu, X, FileText, Send, Award, Linkedin, Globe } from 'lucide-react';
 
 interface NavbarProps {
   onOpenResume: () => void;
   onOpenContact: () => void;
+  onOpenHostingerGuide?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onOpenResume,
+  onOpenContact,
+  onOpenHostingerGuide,
+}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { label: 'Skills & Projects', href: '#skills-matrix' },
+    { label: 'All Tools', href: '#tools-showcase' },
     { label: 'Pipeline Simulator', href: '#pipeline-simulator' },
     { label: 'Featured Projects', href: '#projects' },
     { label: 'Experience', href: '#experience' },
@@ -78,6 +84,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
             <Award className="w-3.5 h-3.5 text-amber-400" />
             <span>Credly</span>
           </a>
+
+          {/* Hostinger Deployment Guide Button */}
+          {onOpenHostingerGuide && (
+            <button
+              onClick={onOpenHostingerGuide}
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-emerald-300 bg-emerald-950/40 border border-emerald-500/40 rounded-lg hover:bg-emerald-900/50 hover:text-emerald-100 transition-colors whitespace-nowrap shadow-sm shadow-emerald-950/30"
+              title="How to publish this portfolio on Hostinger"
+            >
+              <Globe className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Hostinger</span>
+            </button>
+          )}
 
           <button
             onClick={onOpenResume}
@@ -148,6 +166,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onOpenContact }) =
               <FileText className="w-4 h-4" />
               <span>View Full Resume</span>
             </button>
+            {onOpenHostingerGuide && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenHostingerGuide();
+                }}
+                className="w-full text-left py-1 text-sm text-emerald-300 font-medium flex items-center gap-2"
+              >
+                <Globe className="w-4 h-4 text-emerald-400" />
+                <span>Hostinger Deployment Guide</span>
+              </button>
+            )}
           </div>
         </div>
       )}

@@ -16,6 +16,9 @@ import { CertificationsGrid } from './components/CertificationsGrid';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { InteractiveTerminal } from './components/InteractiveTerminal';
+import { ToolsShowcase } from './components/ToolsShowcase';
+import { PortfolioChatbot } from './components/PortfolioChatbot';
+import { HostingerDeployModal } from './components/HostingerDeployModal';
 import { ResumeModal } from './components/ResumeModal';
 import { CustomCursor } from './components/CustomCursor';
 import { Terminal as TerminalIcon } from 'lucide-react';
@@ -23,6 +26,7 @@ import { Terminal as TerminalIcon } from 'lucide-react';
 export default function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [isHostingerModalOpen, setIsHostingerModalOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
 
   const { scrollYProgress } = useScroll();
@@ -62,6 +66,7 @@ export default function App() {
       <Navbar
         onOpenResume={() => setIsResumeOpen(true)}
         onOpenContact={handleOpenContact}
+        onOpenHostingerGuide={() => setIsHostingerModalOpen(true)}
       />
 
       <main className="flex-1">
@@ -74,6 +79,9 @@ export default function App() {
 
         {/* Core Request: Skill-to-Project Highlighting Matrix */}
         <SkillsProjectMatrix onSelectProject={handleOpenProjectModal} />
+
+        {/* Master Comprehensive Inventory of All Tools & Technologies Worked On */}
+        <ToolsShowcase />
 
         {/* Dynamic & Animated CI/CD GitOps Pipeline Simulator with 10+ Rollbacks simulation */}
         <PipelineSimulator />
@@ -104,8 +112,8 @@ export default function App() {
         onOpenTerminal={() => setIsTerminalOpen(true)}
       />
 
-      {/* Floating Quick Action Launcher for Terminal CLI */}
-      <div className="fixed bottom-6 right-6 z-30 flex items-center gap-2">
+      {/* Floating Quick Action Launcher for Terminal CLI (Bottom Left) */}
+      <div className="fixed bottom-6 left-6 z-30 flex items-center gap-2">
         <button
           onClick={() => setIsTerminalOpen(true)}
           className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-slate-900/90 text-cyan-300 hover:text-white hover:bg-slate-800 border border-slate-700/80 shadow-xl backdrop-blur-md transition-all text-xs font-mono group"
@@ -115,6 +123,18 @@ export default function App() {
           <span className="hidden sm:inline">sameer-cli (pune)</span>
         </button>
       </div>
+
+      {/* Interactive AI Q&A Chatbot (Floating Bottom Right) */}
+      <PortfolioChatbot
+        onOpenResume={() => setIsResumeOpen(true)}
+        onOpenTerminal={() => setIsTerminalOpen(true)}
+      />
+
+      {/* Hostinger Publishing & Deployment Guide Modal */}
+      <HostingerDeployModal
+        isOpen={isHostingerModalOpen}
+        onClose={() => setIsHostingerModalOpen(false)}
+      />
 
       {/* Interactive Terminal Modal / Drawer */}
       <InteractiveTerminal
